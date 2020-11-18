@@ -8,7 +8,7 @@ class Persona:
         self.age=age
     #Definisco le funzioni interne(Metodi)
     def bonjour(self):
-        if (self.age > 40):
+        if (self.ruolo == 'Docente UNITS' and self.age > 40):
             print(self.ruolo,':',self.nome,self.cognome,"(anni >40)",)
         else:
             print(self.ruolo,':',self.nome,self.cognome,'(anni {})'.format(self.age))
@@ -21,7 +21,7 @@ class Docente(Persona):
         self.corso=corso
     def bonjour(self): 
         #Anche le sue funzioni
-        Persona.bonjour(self) 
+        Persona.bonjour(self)
         print('> Docente del corso(i):', self.corso,"\n")
 pass
 #Definisco sottoclasse Tecnico
@@ -46,6 +46,8 @@ class Studente(Persona):
 pass
 Gianni=Docente("Gianni","Micheli",37,["Informatica","Analisi","Laboratorio"])
 Gianni.bonjour()
+Giorgio=Docente("Giorgio","Milano",57,["Latino","Analisi","Laboratorio"])
+Giorgio.bonjour()
 Marco=TecnicoAmministrativo("Marco","Maraldo",30,["H3","C9"])
 Marco.bonjour()
 Poco=Studente("Poco","Furbo",57,["Informatica","Analisi","Latino"])
