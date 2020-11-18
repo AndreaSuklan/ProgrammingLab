@@ -1,11 +1,12 @@
+
 class CSVFile:
     #Dichiaro variabile nome
-    def __init__(self,nome):
+    def __init__(self,name):
         self.name=name
     #Dichiaro funzione
     def get_data(self):
         #Apro il file di testo
-        file_origin=open("Shampoo.txt","r")
+        file_origin=open(self.name,"r")
         #Creo Array valori
         valori=[]
         #Leggo le linee del testo
@@ -22,8 +23,6 @@ class CSVFile:
         #Stampo i valori e la loro somma
         print(valori)
 #Assegno la variabile
-lol=CSVFile("Lol")
-#Le dò un nome
-lol.name="Lol"
+lol=CSVFile("Shampoo.txt")
 #Stampo l'elenco
 lol.get_data()
