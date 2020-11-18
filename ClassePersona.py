@@ -22,7 +22,9 @@ class Docente(Persona):
     def bonjour(self): 
         #Anche le sue funzioni
         Persona.bonjour(self)
-        print('> Docente del corso(i):', self.corso,"\n")
+        for i in range(len(self.corso)):
+            print('> Docente del corso:', self.corso[i])
+        print("\n")
 pass
 #Definisco sottoclasse Tecnico
 class TecnicoAmministrativo(Persona):
@@ -31,7 +33,9 @@ class TecnicoAmministrativo(Persona):
         self.edificio=edificio
     def bonjour(self):
         Persona.bonjour(self)
-        print("> Tecnico dell(gli)'edificio(i): ",self.edificio,"\n")
+        for i in range(len(self.edificio)):
+            print("> Tecnico dell'edificio: ", self.edificio[i])
+        print("\n")
 pass
 #Definisco sottoclasse Studente
 class Studente(Persona):
@@ -42,7 +46,9 @@ class Studente(Persona):
     def bonjour(self): 
         #Anche le sue funzioni
         Persona.bonjour(self)
-        print('> Studente del corso(i):', self.corso,"\n")
+        for i in range(len(self.corso)):
+            print('> Docente del corso:', self.corso[i])
+        print("\n")
 pass
 Gianni=Docente("Gianni","Micheli",37,["Informatica","Analisi","Laboratorio"])
 Gianni.bonjour()
