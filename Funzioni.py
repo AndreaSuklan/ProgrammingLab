@@ -5,7 +5,7 @@ class Funzione:
         self.b=b
     
     def nome(self):
-        print("Funzione da ",self.a," a ",self.b)
+        print("\nFunzione da ",self.a," a ",self.b,"\n")
     
     def valori(self,message,values):
         troppo=False
@@ -21,7 +21,7 @@ class Funzione:
         print("---o---o---o---\n")
         
     def minimo(self,dex):
-        print("Calcolo valore più vicino allo zero")
+        print("\nCalcolo valore più vicino allo zero")
         self.nome()
         x1=self.a
         x2=self.b
@@ -48,39 +48,36 @@ class Funzione:
     def eval(self,x):
         pass
 
-
-class Retta(Funzione):
-    def __init__(self,a,b,m,q):
-        super().__init__("Retta",a,b)
-        self.m=m
-        self.q=q
-    
+class Polinomio(Funzione):
+    def __init__(self,a,b,n,coeff):
+        super().__init__("Polinomio",a,b)
+        #Un polinomio di grado n avrà n+1 coefficienti
+        self.n=n+1
+        #Creo una lista con i cofficienti
+        self.coeff=coeff
+    def specifica(self):
+        #La traslazione dall'origine la metto esternamente per belvedere
+        self.coeff[0]=float(input("Inserire la traslazione dall'origine\n"))
+        for i in range(1,self.n):
+            #Assegno ad ogni casella assegno un coefficiente, seguendo un ordine di grado crescente
+            print("Inserire il coefficiente angolare di x^{}".format(i))
+            self.coeff.append(float(input()))
     def nome(self):
         Funzione.nome(self)
-        print("La retta è y = {}x + {}\n".format(self.m,self.q))
-    
+        #Esplicito la funzione generata dall'utente
+        print("Il polinomio è y = {}".format(self.coeff[0]),end=" ")
+        for i in range(1,self.n):
+            print("+ {}(x^{})".format(self.coeff[i],i),end=" ")
+        print("\n")
     def eval(self,x):
-        return self.m *x + self.q
-
-class Parabola(Funzione):
-    def __init__(self,a,b,c0,c1,c2):
-        super().__init__("Parabola",a,b)
-        self.c0=c0
-        self.c1=c1
-        self.c2=c2
-    
-    def nome(self):
-        Funzione.nome(self)
-        print("La parabola è y  = {}(x^2) + {}x + {}\n".format(self.c0,self.c1,self.c2))
-    
-    def eval(self,x):
-        return self.c0*(x**2)+self.c1*x+self.c2
+        somm=0
+        #Per ogni x il risultato della funzione sarà la somma di ogni termine del polinomio, quindi uso un ciclo per calcolarli tutti e assegnarli ad un unica variabile da ritornare
+        for i in range(self.n):
+            somm=somm + (self.coeff[i]*(x**i))
+        return somm
 
 
-scelta=float(input("Digita:\n1 per analizzare una retta\n2 per analizzare una parabola\n"))
-if (scelta==1):
-    retta=Retta(float(input("Inserire range in cui calcolare il valore più vicino a zero\n")),float(input()),float(input("Inserire coefficiente angolare e traslazione dall'origine della retta\n")),float(input()))
-    retta.minimo(float(input("Specificare delta x per stabilire la precisione di calcolo\n")))
-if (scelta==2):
-    parabola=Parabola(float(input("Inserire range in cui calcolare il valore più vicino a zero\n")),float(input()),float(input("Inserire coefficienti c0,c1 e c2\n")),float(input()),float(input()))
-    parabola.minimo(float(input("Specificare delta x per stabilire la precisione di calcolo\n")))
+#Faccio inserire all'utente il range in cui calcolare la funzione, il grado del polinomio e la quantità di valori calcolati
+polinomio=Polinomio(float(input("Inserire range in cui calcolare il valore più vicino a zero\n")),float(input()),int(input("Di che grado sarà il polinomio?\n")),[0])
+polinomio.specifica()
+polinomio.minimo(float(input("Specificare delta x per stabilire la precisione di calcolo\n")))
