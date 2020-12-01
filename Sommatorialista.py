@@ -1,4 +1,12 @@
 from datetime import datetime
+class Mod:
+    
+    def fit(self,data):
+        pass
+    
+    def predict(self,data):
+        pass
+
 def stampa(a):
     print("I valori sono:\n",a,"\n")
 
@@ -24,6 +32,22 @@ def prodotto_vettoriale(a,b):
         print("\nI valori del prodotto vettoriale sono:\n",a,"\n")
     else:
         print("ATTENZIONE: non sono riuscito a calcolare il prodotto vettoriale\n")
+class Inc(Mod):
+    def fit(self,data):
+        raise Exception("Questo modello non provede un fit\n")
+
+    def predict(self,prev_months,volte):
+        som=0
+        i=1
+        while (i < (len(prev_months))):
+            som += (prev_months[i]-prev_months[i-1])
+            i += 1
+        som=som/(len(prev_months)-1)
+        n=0
+        while (n<volte):
+            prev_months.append(prev_months[-1]+som)
+            n += 1
+        return prev_months
 
 
 #Apro il file
@@ -47,9 +71,6 @@ for linea in file:
             valori.append(float(numero))
         except TypeError:
             print("La riga {} non contiene valori numerici ma {}".format(i,linea))
-        except:
-            print("La riga {} contiene un errore sconosciuto; ovvero {}".format(i,linea))
-        tempo=append(datetime.strptime(elemento[0], "%d−%m−%Y" ))
     i=i+1
 pok=[]
 for i in range(len(valori)):
@@ -60,3 +81,5 @@ stampa(valori)
 statistiche(valori)
 somma_vettoriale(valori,pok)
 prodotto_vettoriale(valori,pok)
+fun=Inc()
+print(fun.predict(valori,3))
