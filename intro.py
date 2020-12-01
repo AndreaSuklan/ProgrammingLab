@@ -24,6 +24,8 @@ class CSVFile:
         #Stampo i valori e la loro somma
         print(self.valori)
     def predict(self,volte):
+        self.get_data()
+        print("\n")
         som=0
         i=1
         while (i < (len(self.valori))):
@@ -39,5 +41,4 @@ class CSVFile:
 #Assegno la variabile
 lol=CSVFile("Shampoo.txt",0)
 #Stampo l'elenco
-lol.get_data()
 lol.predict(3)
