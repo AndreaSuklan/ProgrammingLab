@@ -1,14 +1,15 @@
 
 class CSVFile:
     #Dichiaro variabile nome
-    def __init__(self,name):
+    def __init__(self,name,valori):
         self.name=name
+        self.valori=valori
     #Dichiaro funzione
     def get_data(self):
         #Apro il file di testo
         file_origin=open(self.name,"r")
         #Creo Array valori
-        valori=[]
+        self.valori=[]
         #Leggo le linee del testo
         file=file_origin.readlines()
         #Comincio a leggere i valori
@@ -19,10 +20,24 @@ class CSVFile:
                  #Separo data e numero
                 numero=elemento[1]
                 #Assegno i valori ad un array
-                valori.append(float(numero))
+                self.valori.append(float(numero))
         #Stampo i valori e la loro somma
-        print(valori)
+        print(self.valori)
+    def predict(self,volte):
+        som=0
+        i=1
+        while (i < (len(self.valori))):
+            som += (self.valori[i]-self.valori[i-1])
+            i += 1
+        som=som/(len(self.valori)-1)
+        n=0
+        while (n<volte):
+            self.valori.append(self.valori[-1]+som)
+            n += 1
+        print(self.valori)
+        return self.valori
 #Assegno la variabile
-lol=CSVFile("Shampoo.txt")
+lol=CSVFile("Shampoo.txt",0)
 #Stampo l'elenco
 lol.get_data()
+lol.predict(3)
