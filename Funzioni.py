@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+from math import e
 class Funzione:
     def __init__(self,name,a,b):
         self.name=name
@@ -46,10 +48,41 @@ class Funzione:
             if (absf[i]<absf[xmin]):
                 xmin=i
         print("L'f(x) più vicino a zero è {} con x = {} ".format(f[xmin],x[xmin]))
+        plt.plot(x,f)
+        plt.show()
+    #Metto il calcolo dell'integrale direttamente dentro la classe funzione in modo da renderlo generale
+    def integrale(self,dx):
+        print("\nCalcolo l'area sottesa:\n")
+        self.nome()
+        x=self.b
+        i=self.a
+        area=[]
+        y=[]
+        xo=[]
+        while(i<x):
+            fx=self.eval(i)
+            y.append(self.eval(i))
+            xo.append(i)
+            area.append(fx*dx)
+            i += dx
+        print("L'area sottesa dalla curva nell'intervallo da {} a {} equivale a {}".format(self.a,x,sum(area)))
+        plt.plot(xo,y)
+        plt.show()
     
     def eval(self,x):
         pass
                 
+class Esponenziale(Funzione):
+    def __init__(self,a,b,base):
+        super().__init__("Esponenziale",a,b)
+        self.base=base
+    
+    def nome(self):
+        print("La funzione è y = {}^x\n".format(self.base))
+
+    def eval(self,x):
+        return self.base**x
+
 
 class Polinomio(Funzione):
     def __init__(self,a,b,n,coeff):
@@ -82,32 +115,18 @@ class Polinomio(Funzione):
         return somm
 
 
-class Integrale(Polinomio):
-    def __init__(self,a,b,n,coeff):
-        super().__init__(a,b,n,coeff)
-    
-    def IntervalEval(self,x,dx):
-        if (x<float(self.a)):
-            print("La x scelta è fuori dall'intervallo\n")
-            print(0)
-        else:
-            if (x>float(self.b)):
-                print("La x scelta è fuori dall'intervallo\nCalcolo area sottesa in intervallo originale\n")
-                x=self.b
-            i=self.a
-            area=[]
-            while(i<x):
-                fx = Polinomio.eval(self,i)
-                area.append(fx*dx)
-                i += dx
-            print("L'area sottesa dalla curva nell'intervallo da {} a {} equivale a {}".format(self.a,x,sum(area)))
-
-
 #Faccio inserire all'utente il range in cui calcolare la funzione, il grado del polinomio e la quantità di valori calcolati
-calcolo=Integrale(float(input("Inserire range in cui eseguire i calcoli\n")),float(input()),int(input("Di che grado sarà il polinomio?\n")),[0])
-calcolo.specifica()
-scelta=int(input("Seleziona: \n1 per calcolare il valore più vicino a 0 di un polinomio\n2 per calcolare l'area sottesa dal polinomio\n"))
-if (scelta==1):
-    calcoo.minimo(float(input("Specificare delta x per stabilire la precisione di calcolo\n")))
+if (int(input("Seleziona:\n 1 se si vuole analizzare un polinomio\n 2 se si vuole analizzare un esponenziale\n"))==1):
+    calcolo=Polinomio(float(input("Inserire range in cui eseguire i calcoli\n")),float(input()),int(input("Di che grado sarà il polinomio?\n")),[0])
+    calcolo.specifica()
+    scelta=int(input("Seleziona: \n1 per calcolare il valore più vicino a 0 di un polinomio\n2 per calcolare l'area sottesa dal polinomio\n"))
+    if (scelta==1):
+        calcolo.minimo(float(input("Specificare delta x per stabilire la precisione di calcolo\n")))
+    else:
+        calcolo.Integrale(float(input("Con quale densità di calcolo vuoi individuare l'area sottesa dalla curva?\n")))
 else:
-    calcolo.IntervalEval(float(input("Fino a che valore vuoi calcolare l'area?\n")),float(input("Con quale densità di calcolo?\n")))
+    o=Esponenziale(float(input("Inserire range in cui eseguire i calcoli\n")),float(input()),float(input("Inserire base esponenziale\n")))
+    if (int(input("Seleziona: \n 1 per calcolare il valore più vicino a 0 della funzione\n 2 per calcolare l'area sottesa dala funzione\n"))==1):
+        o.minimo(float(input("Specificare delta x per stabilire la precisione di calcolo\n")))
+    else:
+        o.integrale(float(input("Specificare delta x per stabilire la precisione di calcolo\n")))
