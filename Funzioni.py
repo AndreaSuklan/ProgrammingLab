@@ -48,8 +48,8 @@ class Funzione:
             if (absf[i]<absf[xmin]):
                 xmin=i
         print("L'f(x) più vicino a zero è {} con x = {} ".format(f[xmin],x[xmin]))
-        plt.plot(x,f)
-        plt.show()
+        #plt.plot(x,f)
+        #plt.show()
     #Metto il calcolo dell'integrale direttamente dentro la classe funzione in modo da renderlo generale
     def integrale(self,dx):
         print("\nCalcolo l'area sottesa:\n")
@@ -66,11 +66,33 @@ class Funzione:
             area.append(fx*dx)
             i += dx
         print("L'area sottesa dalla curva nell'intervallo da {} a {} equivale a {}".format(self.a,x,sum(area)))
-        plt.plot(xo,y)
-        plt.show()
+        #plt.plot(xo,y)
+        #plt.show()
     
     def eval(self,x):
         pass
+
+    def __iter__(self):
+        #Richiedo la densità di calcolo dell'integrale
+        self.dx = float(input("Decidere densità calcolo\n"))
+        #Voglio restituire la sommatoria parziale del calcolo
+        self.som = 0
+        return self
+
+    def __next__(self):
+        #Blocco l'terzaione se si esce dall'intervallo della funzione originaria
+        if ((self.a) >= self.b):
+            print("Il valore dell'integrale è stato calcolate per inter all'interno dell'intervallo scelto\n")
+            raise StopIteration
+        else:
+            #Parto dal primo punto dell'intervallo
+            x = self.a
+            #Ed aggiungo ogni volta la differenza fra i valori di x
+            self.a += self.dx
+            #Ne calcolo l'area e la salvo nella somma parziale
+            self.som += self.eval(x)*self.dx
+            #Riporto la somma
+            return self.som
                 
 class Esponenziale(Funzione):
     def __init__(self,a,b,base):
@@ -114,7 +136,7 @@ class Polinomio(Funzione):
             somm=somm + (self.coeff[i]*(x**i))
         return somm
 
-
+'''
 #Faccio inserire all'utente il range in cui calcolare la funzione, il grado del polinomio e la quantità di valori calcolati
 if (int(input("Seleziona:\n 1 se si vuole analizzare un polinomio\n 2 se si vuole analizzare un esponenziale\n"))==1):
     calcolo=Polinomio(float(input("Inserire range in cui eseguire i calcoli\n")),float(input()),int(input("Di che grado sarà il polinomio?\n")),[0])
@@ -130,3 +152,9 @@ else:
         o.minimo(float(input("Specificare delta x per stabilire la precisione di calcolo\n")))
     else:
         o.integrale(float(input("Specificare delta x per stabilire la precisione di calcolo\n")))
+'''
+
+fun=Esponenziale(-2,2,2)
+fun=iter(fun)
+for i in range(6):
+    print(next(fun))
