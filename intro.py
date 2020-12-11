@@ -28,14 +28,15 @@ class CSVFile:
         print("\n")
         som=0
         i=1
-        while (i < (len(self.valori))):
-            som += (self.valori[i]-self.valori[i-1])
-            i += 1
-        som=som/(len(self.valori)-1)
         n=0
         while (n<volte):
+            while (i < (len(self.valori))):
+                som += (self.valori[i]-self.valori[i-1])
+                i += 1
+            som=som/(len(self.valori)-1)
             self.valori.append(self.valori[-1]+som)
             n += 1
+            i=1
         print(self.valori)
         return self.valori
 #Assegno la variabile
