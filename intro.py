@@ -37,9 +37,21 @@ class CSVFile:
             self.valori.append(self.valori[-1]+som)
             n += 1
             i=1
+            som=0
         print(self.valori)
         return self.valori
+    def fit(self):
+        self.get_data()
+        i=1
+        som=0
+        while (i < (len(self.valori))):
+            som += (self.valori[i]-self.valori[i-1])
+            i += 1
+        print("\n L'incremento medio è: ",som/(len(self.valori)-1))
+        return som/(len(self.valori)-1)
+
 #Assegno la variabile
 lol=CSVFile("Shampoo.txt",0)
 #Stampo l'elenco
-lol.predict(3)
+lol.fit()
+lol.predict(1)
